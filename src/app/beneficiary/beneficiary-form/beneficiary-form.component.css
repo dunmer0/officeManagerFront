@@ -1,0 +1,9 @@
+.my-custom-button {
+  background-color: rgb(178 223 219); /* Custom background color */
+  color: #fff; /* Custom text color */
+  border: black 2px solid;
+  border-radius: 8px; /* Custom border radius */
+  padding: 12px 24px; /* Custom padding */
+}
+
+

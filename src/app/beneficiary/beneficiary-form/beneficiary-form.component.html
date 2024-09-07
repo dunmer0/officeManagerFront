@@ -1,0 +1,67 @@
+<div class="mt-2 ">
+<form [formGroup]="beneficiaryForm" class="grid grid-cols-2" >
+  <mat-form-field hintLabel="Min 3 characters" class="col-span-2 mt-4 mb-4" >
+    <mat-label>Name</mat-label>
+    <input matInput  minlength="3" placeholder="Ex. Nougat"  formControlName="name" (input)="onName($event)"
+           class="bg-gray-200 border-2 border-teal-600 rounded-2xl focus:border-blue-500  p-2"
+    />
+  </mat-form-field>
+  <mat-form-field hintLabel="Min 3 charactes" class="col-span-2 mb-4" >
+    <mat-label>Street</mat-label>
+    <input matInput minlength="3" placeholder="Ex. Dambovitei"  formControlName="addressName" (input)="onAddress($event)"
+           class="bg-gray-200 border-2 border-teal-600 rounded-2xl focus:border-blue-500  p-2"/>
+    <mat-error *ngIf="beneficiaryForm.controls['addressName'].hasError('required')">
+      Address is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field  class="col-span-2 mb-4" >
+    <mat-label>Street number</mat-label>
+    <input matInput type="text" pattern="[0-9]*"  placeholder="Ex. 77"  formControlName="streetNumber"
+           class="bg-gray-200 border-2 border-teal-600 rounded-2xl focus:border-blue-500  p-2"/>
+    <mat-error *ngIf="beneficiaryForm.controls.streetNumber.hasError('pattern')">
+      Only <strong>numbers</strong>  please.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field  class="col-span-2 mb-4" >
+    <mat-label>City</mat-label>
+    <input matInput type="text"  placeholder="Ex. Cluj-Napoca"  formControlName="city"
+           class="bg-gray-200 border-2 border-teal-600 rounded-2xl focus:border-blue-500  p-2"/>
+    @if(beneficiaryForm.controls.city.hasError('pattern')){
+      <mat-error>Accepted characters: a-z, A-Z, 0-9, ".", "-" and "_".</mat-error>
+    }
+    @if (beneficiaryForm.controls.city.hasError('maxLength')){
+      <mat-error>Maximum length is 50 characters.</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field  class="col-span-2 mb-4" >
+    <mat-label>State</mat-label>
+    <input matInput type="text"  placeholder="Ex. Cluj"  formControlName="state"
+           class="bg-gray-200 border-2 border-teal-600 rounded-2xl focus:border-blue-500  p-2"/>
+    @if (beneficiaryForm.controls.state.hasError('pattern')){
+          <mat-error>Accepted characters: a-z, A-Z, 0-9, ".", "-" and "_".</mat-error>
+    }
+    @if (beneficiaryForm.controls.state.hasError('maxLength')){
+      <mat-error>Maximum length is 50 characters.</mat-error>
+    }
+  </mat-form-field>
+  </form>
+<div class="grid grid-cols-2">
+  <div (click)="onSubmit()" class="w-2/12 bg-teal-100 border-2 border-teal-600 rounded-2xl text-sm hover:text-xl h-12 flex flex-row mt-2 lg:text-xl text-clip">
+    <button mat-button
+            class="w-full">
+      Adauga
+    </button>
+  </div>
+  <div (click)="goBack()" class="w-2/12 bg-teal-100 border-2 border-teal-600 rounded-2xl text-sm hover:text-xl h-12 col-span-1 mt-2 lg:text-xl text-clip ">
+    <button mat-button
+            class="w-full">
+      Inapoi
+    </button>
+  </div>
+</div>
+
+
+
+
+</div>
+

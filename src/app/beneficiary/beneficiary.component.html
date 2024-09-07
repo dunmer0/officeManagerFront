@@ -1,0 +1,76 @@
+<div class="grid grid-cols-12 ">
+  <div class="col-span-4 grid ">
+    <div class="text-2xl grid grid-cols-2 bg-teal-100">
+      <div class="col-span-1 place-self-stretch">
+        Beneficiari
+      </div>
+      <div class="col-span-1 place-content-end">
+        <button (click)="goToRoute('add-beneficiary')">
+          <mat-icon aria-hidden="false" aria-label="Add icon" fontIcon="add"></mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="border-l-2 border-black border">
+      <table mat-table [dataSource]="beneficiaryStore.entities()" >
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element" (click)="beneficiaryStore.setId(element.id)" class="cursor-pointer relative">
+            {{element.name}}
+          <mat-icon fontIcon="delete" class="absolute end-0" (click)="deleteBeneficiary()"></mat-icon>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+
+    </div>
+<!--      @for (beneficiary of beneficiaryStore.entities(); track beneficiary.id) {-->
+<!--        <button class=" hover:bg-teal-100 h-8"-->
+<!--                [ngClass]="beneficiaryStore.beneficiaryId()==beneficiary.id ? 'bg-teal-100' : ''"-->
+<!--                (click)="beneficiaryStore.setId(beneficiary.id)"-->
+<!--        >-->
+<!--          {{ beneficiary.name }}-->
+<!--        </button>-->
+<!--    }-->
+  </div>
+  <div class="col-span-8 h-8">
+    <div class="grid grid-cols-12 place-items-center text-2xl ">
+      <div class="col-span-3 w-full bg-teal-200">
+        <button class="w-full hover:bg-teal-100"
+                (click)="goToRoute('details')"
+                [ngClass]="!checkRoute('details') ? 'bg-teal-200' : 'bg-teal-100'">
+          Detalii
+        </button>
+      </div>
+      <div class="col-span-3 w-full bg-teal-200">
+        <button class="w-full hover:bg-teal-100"
+                (click)="goToRoute('certificates')"
+                [ngClass]="!checkRoute('certificate') ? 'bg-teal-200' : 'bg-teal-100'">
+          Certificate
+        </button>
+      </div>
+      <div class="col-span-3 w-full bg-teal-200">
+        <button class="w-full hover:bg-teal-100"
+        (click)="goToRoute('licenses')"
+        [ngClass]="!checkRoute('licenses') ? 'bg-teal-200' : 'bg-teal-100'">
+          Autorizatii
+        </button>
+
+      </div>
+      <div class="col-span-3 w-full bg-teal-200">
+        <button class="w-full hover:bg-teal-100"
+                (click)="goToRoute('projects')"
+                [ngClass]="!checkRoute('projects') ? 'bg-teal-200' : 'bg-teal-100'">
+          Proiecte
+        </button>
+      </div>
+
+    </div>
+    <div class="w-full">
+      <router-outlet ></router-outlet>
+    </div>
+  </div>
+</div>
+

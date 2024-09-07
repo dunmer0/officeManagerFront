@@ -1,0 +1,32 @@
+<div class="grid grid-cols-12 mt-2">
+  <div class="col-span-3 grid ">
+    <div class="text-lg font-extrabold">
+      TITLE
+    </div>
+
+  </div>
+  <div class="col-span-3 text-lg font-extrabold ">
+    NUMBER
+  </div>
+  <div class="col-span-3 text-lg font-extrabold">
+    RELEASE DATE
+  </div>
+  <div class="col-span-3 text-lg font-extrabold">
+    VALIDITY
+  </div>
+  @for (certificate of certificateStore.certificatesByBeneficiary(); track certificate.id){
+    <div class="col-span-3">
+      {{certificate.title}}
+    </div>
+    <div class="col-span-3">
+      {{certificate.number}}
+    </div>
+    <div class="col-span-3">
+      {{certificate.releaseDate}}
+    </div>
+    <div class="col-span-3">
+      {{certificate.validity}}
+    </div>
+  }
+</div>
+
