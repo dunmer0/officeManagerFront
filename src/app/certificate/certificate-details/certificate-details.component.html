@@ -1,0 +1,164 @@
+@if (certificate) {
+  <div class="grid grid-rows-[repeat(2,auto)] mt-4">
+
+
+    <div class="row-span-1 mt-10">
+      <div class="grid grid-cols-4 gap-4">
+        <mat-form-field class="col-span-1">
+          <mat-label>Number</mat-label>
+          <input
+            matInput
+            type="text"
+            id="number"
+            name="number"
+            class="form-control"
+            required
+            pattern="[a-zA-Z0-9\\.\_\- ]*"
+            minlength="3"
+            [ngModel]="certificate.number"
+            #number="ngModel"
+            [disabled]="!isEditable"
+          />
+          <mat-error *ngIf="number.errors?.['minlength'] && (number.dirty || number.touched)">
+            number is <strong>required</strong>.
+          </mat-error>
+          <mat-error *ngIf="number.errors?.['pattern'] && (number.dirty || number.touched)">
+            Special characters <strong>not</strong> allowed.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-span-3">
+          <mat-label>Title</mat-label>
+          <input
+            matInput
+            type="text"
+            id="title"
+            name="title"
+            class="form-control"
+            required
+            pattern="[a-zA-Z0-9\\.\_\- ]*"
+            minlength="3"
+            [ngModel]="certificate.title"
+            #title="ngModel"
+            [disabled]="!isEditable"
+          />
+          <mat-error *ngIf="title.errors?.['minlength'] && (title.dirty || title.touched)">
+            Name is <strong>required</strong>.
+          </mat-error>
+          <mat-error *ngIf="title.errors?.['pattern'] && (title.dirty || title.touched)">
+            Special characters <strong>not</strong> allowed.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-span-1">
+          <mat-label>Release Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            id="releaseDate"
+            name="releaseDate"
+            class="form-control"
+            required
+            minlength="3"
+            [ngModel]="certificate.releaseDate"
+            #releaseDate="ngModel"
+            [disabled]="!isEditable"
+          />
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="releaseDate.errors?.['required'] && (releaseDate.dirty || releaseDate.touched)">
+            Release date is <strong>required</strong>.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-span-1">
+          <mat-label>Expiry Date</mat-label>
+          <input
+            matInput
+            type="date"
+            id="expiryDate"
+            name="expiryDate"
+            class="form-control"
+            required
+            minlength="3"
+            [ngModel]="certificate.expiryDate"
+            disabled
+          />
+        </mat-form-field>
+        <mat-form-field class="col-span-1">
+          <mat-label>Validity</mat-label>
+          <input
+            matInput
+            type="test"
+            id="validity"
+            name="validity"
+            class="form-control"
+            required
+            pattern="[0-9]*"
+            [ngModel]="certificate.validity"
+            #validity="ngModel"
+            [disabled]="!isEditable"
+          />
+          <mat-error *ngIf="validity.errors?.['required'] && (validity.dirty || releaseDate.touched)">
+            Validity is <strong>required</strong>.
+          </mat-error>
+          <mat-error *ngIf="validity.errors?.['pattern'] && (validity.dirty || releaseDate.touched)">
+            Only <strong>numbers</strong> are <strong>allowed</strong>.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-span-1">
+          <mat-label>Check Time</mat-label>
+          <input
+            matInput
+            type="text"
+            id="checkTime"
+            name="checkTime"
+            class="form-control"
+            required
+            pattern="[0-9]*"
+            [ngModel]="certificate.checkTime"
+            #checkTime="ngModel"
+            [disabled]="!isEditable"
+          />
+          <mat-error *ngIf="checkTime.errors?.['required'] && (checkTime.dirty || releaseDate.touched)">
+            Validity is <strong>required</strong>.
+          </mat-error>
+          <mat-error *ngIf="checkTime.errors?.['pattern'] && (checkTime.dirty || releaseDate.touched)">
+            Only <strong>numbers</strong> are <strong>allowed</strong>.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row-span-1 h-8 grid grid-cols-4">
+      @if (!isEditable) {
+
+        <button (click)="setIsEditable()"
+                class="col-start-4 col-span-1  bg-teal-100 border-2 border-teal-600 rounded-2xl text-sm hover:text-xl h-12 mt-2 lg:text-lg text-clip"
+        >Edit
+        </button>
+
+      }
+      @if (isEditable) {
+
+        <button (click)="save(title.value, number.value, releaseDate.value, checkTime.value, validity.value)"
+                class="col-start-3 col-span-1  bg-teal-100 border-2 border-teal-600 rounded-2xl text-sm hover:text-xl h-12 mt-2 lg:text-lg text-clip"
+        >Save
+        </button>
+        <button (click)="setIsEditable()"
+                class="col-start-4 col-span-1  bg-teal-100 border-2 border-teal-600 rounded-2xl text-sm hover:text-xl h-12 mt-2 lg:text-lg text-clip"
+        >Cancel
+        </button>
+      }
+
+
+
+    </div>
+  </div>
+
+}
+<!--id:number;-->
+<!--beneficiaryId:number;-->
+<!--title:string;-->
+<!--number:string;-->
+<!--releaseDate:string;-->
+<!--expiryDate:string;-->
+<!--checkTime:number;-->
+<!--validity:number;-->
+<!--commentDtos: Comment;-->

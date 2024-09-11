@@ -1,7 +1,8 @@
-<div class="text-lg text-blue-600" >Office Management</div>
 <div class="grid grid-cols-12 bg-gray-100 h-dvh">
-  <div class="col-span-1 ">Liber</div>
+  <div class="col-span-1 "></div>
   <div class="col-span-1 bg-gray-200 place-items-center">
+    @if(this.userService.isLoggedIn()){
+
     <div class="w-11/12 bg-teal-100 border-2 border-teal-600 rounded-2xl text-sm hover:text-xl h-12 flex flex-row lg:text-lg">
       <button
         (click)="goToRoute('beneficiary')"
@@ -18,39 +19,14 @@
     <div class="w-11/12 bg-teal-100 border-2 border-teal-600 rounded-2xl text-sm hover:text-xl h-12 flex flex-row mt-2 lg:text-lg">
       <button
         class="w-full">
-        Licenses
-      </button>
-    </div>
-    <div class="w-11/12 bg-teal-100 border-2 border-teal-600 rounded-2xl text-sm hover:text-xl h-12 flex flex-row mt-2 lg:text-lg">
-      <button
-        class="w-full">
         Projects
       </button>
     </div>
-    <div class="w-11/12 bg-teal-100 border-2 border-teal-600 rounded-2xl text-sm hover:text-xl h-12 flex flex-row mt-2 lg:text-lg text-clip">
-      <button
-        class="w-full">
-        Institutions
-      </button>
-    </div>
-
+    }
   </div>
   <div class="col-span-9 bg-gray-200 h-8">
     <router-outlet></router-outlet>
-
   </div>
-
-  <div class="col-span-1 ">Liber
+  <div class="col-span-1 ">
   </div>
 </div>
-
-<!--<button class="bg-yellow-500"-->
-<!--        matTool="By default, I delay"-->
-<!--        aria-label="Button that displays a tooltip that has custom delays through a default config">-->
-<!--  Button with delay-default tooltip-->
-<!--</button>-->
-<!--<input-->
-<!--  class="bg-yellow-500"-->
-<!--  matTooltip="Input tooltip"-->
-<!--  type="text">-->
-<!--<app-beneficiary></app-beneficiary>-->

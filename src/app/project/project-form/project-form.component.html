@@ -1,0 +1,54 @@
+<div class="mt-2 ">
+  <form [formGroup]="projectForm" class="grid grid-cols-6 gap-4" >
+    <mat-form-field  class="col-span-1 mt-4 mb-4" >
+      <mat-label>Number</mat-label>
+      <input matInput  minlength="3" placeholder="235.125"  formControlName="number"
+             class="bg-gray-200 border-2 border-teal-600 rounded-2xl focus:border-blue-500  p-2"
+      />
+    </mat-form-field>
+    <mat-form-field  class="col-span-5 mt-4 mb-4" >
+      <mat-label>Title</mat-label>
+      <input matInput minlength="3" placeholder="Construire iombil de locuinte..."  formControlName="title"
+             class="bg-gray-200 border-2 border-teal-600 rounded-2xl focus:border-blue-500  p-2"/>
+      @if (projectForm.controls.title.hasError('pattern')){
+        <mat-error >
+          Only alphanumeric, "." ,"-" and "_" <strong>allowed</strong>.
+        </mat-error>
+      }
+      <mat-error *ngIf="projectForm.controls.title.hasError('required')">
+        Title is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Certificate</mat-label>
+      <mat-select formControlName="certificate" >
+        <!-- Use *ngFor to create options dynamically from the cities list -->
+        <mat-option *ngFor="let certificate of certificateStore.certificatesByBeneficiary()" [value]="certificate.id">
+          {{ certificate.number }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+<!--    <select-->
+<!--      class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">-->
+<!--      <option *ngFor="let certificate of certificateStore.certificatesByBeneficiary()" [value]="certificate.number">-->
+<!--        {{ certificate.number }}-->
+<!--      </option>-->
+<!--    </select>-->
+<!--    <label-->
+<!--      class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">-->
+<!--      Select a City-->
+<!--    </label>-->
+  </form>
+  <div class="grid grid-cols-4 gap-4">
+    <div class="col-start-3 col-span-1 ">
+      <button   (click)="onSubmit()" class=" bg-teal-100 border-2 border-teal-600 rounded-2xl text-lg hover:text-xl h-12 mt-2 lg:text-lg text-clip w-full">
+        Adauga
+      </button>
+    </div>
+    <div class="col-start-4 col-span-1">
+      <button (click)="goBack()" class="  bg-teal-100 border-2 border-teal-600 rounded-2xl text-lg hover:text-xl h-12 mt-2 lg:text-lg text-clip w-full">
+        Inapoi
+      </button>
+    </div>
+  </div>
+</div>

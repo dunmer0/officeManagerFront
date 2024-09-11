@@ -1,3 +1,5 @@
+import {Comment} from "../../comment/shared/comment";
+
 export type License = {
   id: number;
   beneficiaryId: number;
@@ -9,4 +11,6 @@ export type License = {
   expirationDate: string;
   validity: number;
   isValid: boolean;
+  comments: Comment[];
+
 }

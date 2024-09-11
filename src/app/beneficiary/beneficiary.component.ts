@@ -17,6 +17,7 @@ import {
   MatTable, MatTableDataSource
 } from "@angular/material/table";
 import {Beneficiary} from "./shared/beneficiary";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-beneficiary',
@@ -37,6 +38,7 @@ import {Beneficiary} from "./shared/beneficiary";
     MatCellDef,
     MatRowDef,
     MatHeaderCellDef,
+    FormsModule,
   ],
   animations: [
     trigger('openClose',[
@@ -60,7 +62,6 @@ export class BeneficiaryComponent {
 
 
 
-
   goToRoute(route: string) {
     this.router.navigate([`${route}`], {relativeTo: this.route});
   }
@@ -69,7 +70,8 @@ export class BeneficiaryComponent {
     return this.router.url.includes(route);
   }
 
-  deleteBeneficiary(){
+  deleteBeneficiary(beneficiaryId:number){
+    // this.beneficiaryStore.
     console.log("clicked")
   }
 }

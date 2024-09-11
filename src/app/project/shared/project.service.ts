@@ -9,11 +9,13 @@ import {Project} from "./project";
 })
 export class ProjectService {
   private http = inject(HttpClient);
-  private baseUrl = `${environment.apiUrl}/project`;
+  private baseUrl = `${environment.apiUrl}/projects`;
   constructor() { }
-
+  // @RequestParam long beneficiaryId, @RequestParam long certificateId,
+  // @RequestBody ProjectDto dto)
   addProject(project: Project): Observable<Project> {
-    return this.http.post<Project>(`${this.baseUrl}`, project);
+    const projectUrl = `${this.baseUrl}?beneficiaryId=${project.beneficiaryId}&certificateId=${project.certificateId}`;
+    return this.http.post<Project>(projectUrl, project);
   }
   deleteProject(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);

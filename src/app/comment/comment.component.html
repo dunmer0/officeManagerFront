@@ -1,0 +1,109 @@
+@if (input) {
+  <div class="grid grid-rows-[repeat(2,auto)] mt-10">
+    <div
+      class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
+      <table class="w-full text-left table-auto min-w-max">
+        <thead>
+        <tr>
+          <th class="p-4 border-b border-slate-300 bg-slate-50 w-7">
+            <p class="block text-sm font-normal leading-none text-slate-500">
+              No.
+            </p>
+          </th>
+          <th class="p-4 border-b border-slate-300 bg-slate-50">
+            <p class="block text-sm font-normal leading-none text-slate-500">
+              Comments
+            </p>
+          </th>
+
+          <th class="p-4 border-b border-slate-300 bg-slate-50 w-7">
+            <button class="text-slate-600 hover:text-slate-800 ml-2" (click)="addComment()">
+
+              <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <g id="Complete">
+                  <g id="add-square">
+                    <g>
+                      <rect data-name="--Rectangle" fill="none" height="20" id="_--Rectangle" rx="2" ry="2"
+                            stroke="#000000"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" x="2" y="2"/>
+                      <line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            x1="15.5"
+                            x2="8.5" y1="12" y2="12"/>
+                      <line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            x1="12"
+                            x2="12" y1="15.5" y2="8.5"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+
+            </button>
+          </th>
+        </tr>
+        </thead>
+
+        <tbody>
+          @for (comment of input.comments; track comment.id; let idx = $index) {
+            <tr class="hover:bg-slate-50 border-b border-slate-200">
+              <td class="p-4 py-5">
+
+                <p class="block font-semibold text-sm text-slate-800">{{ idx + 1 }}</p>
+              </td>
+              <td class="p-4 py-5">
+
+                <p class="block font-semibold text-sm text-slate-800">{{ comment.text }}</p>
+              </td>
+
+            </tr>
+          }
+
+          @if (isEditable) {
+            <tr class="hover:bg-slate-50 border-b border-slate-200">
+              <td class="p-4 py-5">
+
+                <p class="block font-semibold text-sm text-slate-800"></p>
+              </td>
+              <td class="p-4 py-5">
+                <mat-form-field class="w-full" appearance="outline">
+                  <input
+                    matInput
+                    type="textarea"
+                    id="comment"
+                    name="comment"
+                    class="form-control"
+                    required
+                    pattern="[a-zA-Z0-9\\.\_\- ]*"
+                    [ngModel]=""
+                    #comment="ngModel"
+                  />
+                  <mat-error *ngIf="comment.errors?.['pattern'] && (comment.dirty || comment.touched)">
+                    Special characters <strong>not</strong> allowed.
+                  </mat-error>
+                </mat-form-field>
+                <p class="block font-semibold text-sm text-slate-800"></p>
+              </td>
+              <td class="p-4 py-5">
+
+                <button class="text-slate-600 hover:text-slate-800 ml-2" (click)="saveComment(comment.value)">
+                  <svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                       width="24px" height="24px" viewBox="0 0 96 96" enable-background="new 0 0 92 92"
+                       xml:space="preserve">
+<path id="XMLID_1532_" d="M89,13v66c0,2.2-1.8,4-4,4H32.9c-2.2,0-3.9-1.8-3.9-4V60.7c0-2.2,1.8-4,4-4s4,1.8,4,4V75h44V17H37v14.3
+	c0,2.2-1.8,4-4,4s-4-1.8-4-4V13c0-2.2,1.7-4,3.9-4H85C87.2,9,89,10.8,89,13z M46.5,58.9c-1.6,1.6-1.5,4.1,0,5.7
+	c0.8,0.8,1.8,1.2,2.8,1.2c1,0,2.1-0.4,2.8-1.2l15.7-15.8c1.5-1.6,1.5-4.1,0-5.6L52.2,27.2c-1.6-1.6-4.1-1.6-5.7,0
+	c-1.6,1.6-1.6,4.1,0,5.7l8.9,9L7,42c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4c0,0,0,0,0,0l48.4-0.1L46.5,58.9z"/>
+</svg>
+
+
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+}
+

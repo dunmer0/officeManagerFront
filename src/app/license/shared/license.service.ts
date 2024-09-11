@@ -2,30 +2,33 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs";
-import {Certificate} from "../../certificate/shared/certificate";
-import {Institution} from "./license";
+import {License} from "./license";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LicenseService {
 
-  constructor() { }
+  constructor() {
+  }
 
   private http = inject(HttpClient);
   private baseUrl = `${environment.apiUrl}/licenses`;
 
-  public getAll(): Observable<Institution[]> {
-    return this.http.get<Institution[]>(`${this.baseUrl}`);
+  public getAll(): Observable<License[]> {
+    return this.http.get<License[]>(`${this.baseUrl}`);
   }
-  public add(institution:Institution):Observable<Institution>{
-    return this.http.post<Institution>(`${this.baseUrl}`, institution);
+
+  public add(institution: License): Observable<License> {
+    return this.http.post<License>(`${this.baseUrl}`, institution);
   }
-  public update(institution:Institution):Observable<Institution>{
-    return this.http.put<Institution>(`${this.baseUrl}`, institution);
+
+  public update(institution: License): Observable<License> {
+    return this.http.put<License>(`${this.baseUrl}`, institution);
   }
-  public delete(institutionId:number):Observable<Institution> {
+
+  public delete(institutionId: number): Observable<License> {
     const deleteUrl = `${this.baseUrl}/${institutionId}`;
-    return this.http.delete<Institution>(deleteUrl);
+    return this.http.delete<License>(deleteUrl);
   }
 }

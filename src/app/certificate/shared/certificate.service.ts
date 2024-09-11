@@ -1,11 +1,9 @@
-import {inject, Injectable, signal} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {Certificate} from "./certificate";
 import {HttpClient} from "@angular/common/http";
-import {toObservable, toSignal} from "@angular/core/rxjs-interop";
-import {BeneficiaryService} from "../../beneficiary/shared/beneficiary.service";
-import {Observable, switchMap, tap} from "rxjs";
+import {Observable, tap} from "rxjs";
 import {environment} from "../../../environments/environment";
-import { ReturnStatement } from '@angular/compiler';
+import {Comment} from "../../comment/shared/comment";
 
 @Injectable({
   providedIn: 'root'
@@ -13,34 +11,37 @@ import { ReturnStatement } from '@angular/compiler';
 export class CertificateService {
   private certificateUrl = `${environment.apiUrl}/certificate`;
   private http: HttpClient = inject(HttpClient);
-  
+
 
   constructor() {
   }
 
-  getAllCertificates(): Observable<Certificate[]>{
+  getAllCertificates(): Observable<Certificate[]> {
     return this.http.get<Certificate[]>(this.certificateUrl);
   }
 
-  getCertificatesByBeneficiary(beneficiaryId:number): Observable<Certificate[]> {
-    console.log("Log from getCertificatesByBeneficiary()")
-    console.log(`${this.certificateUrl}/beneficiary?beneficiaryId=${beneficiaryId}`)
-    return this.http.get<Certificate[]>(`${this.certificateUrl}/beneficiary?beneficiaryId=${beneficiaryId}`).pipe(
-      tap(certificate => console.log("API response:" + certificate))
-    );
+  getCertificatesByBeneficiary(beneficiaryId: number): Observable<Certificate[]> {
+
+    return this.http.get<Certificate[]>(`${this.certificateUrl}/beneficiary?beneficiaryId=${beneficiaryId}`);
   }
 
-  addCertificate(certificate:Certificate) : Observable<Certificate>{
-    return this.http.post<Certificate>(this.certificateUrl, certificate);
+  addCertificate(certificate: Certificate): Observable<Certificate> {
+    const addUrl = `${this.certificateUrl}?beneficiaryId=${certificate.beneficiaryId}`;
+    return this.http.post<Certificate>(addUrl, certificate);
   }
 
-  updateCertificate(certificate:Certificate):Observable<Certificate>{
+  updateCertificate(certificate: Certificate): Observable<Certificate> {
     return this.http.put<Certificate>(this.certificateUrl, certificate);
   }
 
-  deleteCertificate(certificateId:number): Observable<any>{
+  deleteCertificate(certificateId: number): Observable<any> {
     const deleteUrl = `${this.certificateUrl}/${certificateId}`;
     return this.http.delete<any>(deleteUrl);
+  }
+
+  addComment(comment: Comment): Observable<any> {
+    const commentUrl = `${this.certificateUrl}/comments`;
+    return this.http.post<Certificate>(commentUrl, comment);
   }
 
 

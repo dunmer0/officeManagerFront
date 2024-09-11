@@ -1,65 +1,103 @@
 <div class="grid grid-cols-12 ">
-  <div class="col-span-4 grid ">
-    <div class="text-2xl grid grid-cols-2 bg-teal-100">
-      <div class="col-span-1 place-self-stretch">
-        Beneficiari
+  <div class="col-span-2 grid ">
+    <div class="w-full flex justify-between items-center mb-3 mt-1 pl-3">
+      <div>
+        <h3 class="text-xl font-bold text-slate-800">Beneficiaries</h3>
+
       </div>
-      <div class="col-span-1 place-content-end">
-        <button (click)="goToRoute('add-beneficiary')">
-          <mat-icon aria-hidden="false" aria-label="Add icon" fontIcon="add"></mat-icon>
+      <div class="ml-3">
+        <button class="text-slate-600 hover:text-slate-800 ml-2" (click)="goToRoute('add-beneficiary')" >
+          <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <g id="Complete">
+              <g id="add-square">
+                <g>
+                  <rect data-name="--Rectangle" fill="none" height="20" id="_--Rectangle" rx="2" ry="2"
+                        stroke="#000000"
+                        stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" x="2" y="2"/>
+                  <line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        x1="15.5"
+                        x2="8.5" y1="12" y2="12"/>
+                  <line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        x1="12"
+                        x2="12" y1="15.5" y2="8.5"/>
+                </g>
+              </g>
+            </g>
+          </svg>
+
         </button>
+
       </div>
     </div>
     <div class="border-l-2 border-black border">
-      <table mat-table [dataSource]="beneficiaryStore.entities()" >
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element" (click)="beneficiaryStore.setId(element.id)" class="cursor-pointer relative">
-            {{element.name}}
-          <mat-icon fontIcon="delete" class="absolute end-0" (click)="deleteBeneficiary()"></mat-icon>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <div>
+        <input
+          (change)="beneficiaryStore.setFilter(query.value)"
+          #query
+          class="bg-white h-10 w-full  py-2 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md"
+          placeholder="Search for beneficiary..."
+        />
+      </div>
+
+
+      <table>
+        <tbody>
+        @for (beneficiary of beneficiaryStore.filteredBeneficiaries(); track beneficiary.id){
+          <tr class="hover:bg-slate-50 border-b border-slate-200">
+            <td class="p-4 py-1">
+              <button (click)="beneficiaryStore.setId(beneficiary.id)">
+                <p class="block font-semibold text-lg text-slate-800">{{ beneficiary.name }}</p>
+              </button>
+            </td>
+
+            <td class="p-4 py-1">
+              <button class="text-slate-600 hover:text-slate-800 ml-2" >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g id="Dribbble-Light-Preview" transform="translate(-179.000000, -360.000000)" fill="#000000">
+                      <g id="icons" transform="translate(56.000000, 160.000000)">
+                        <path
+                          d="M130.35,216 L132.45,216 L132.45,208 L130.35,208 L130.35,216 Z M134.55,216 L136.65,216 L136.65,208 L134.55,208 L134.55,216 Z M128.25,218 L138.75,218 L138.75,206 L128.25,206 L128.25,218 Z M130.35,204 L136.65,204 L136.65,202 L130.35,202 L130.35,204 Z M138.75,204 L138.75,200 L128.25,200 L128.25,204 L123,204 L123,206 L126.15,206 L126.15,220 L140.85,220 L140.85,206 L144,206 L144,204 L138.75,204 Z"
+                          id="delete-[#1487]">
+                        </path>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </button>
+            </td>
+          </tr>
+        }
+        </tbody>
       </table>
 
 
     </div>
-<!--      @for (beneficiary of beneficiaryStore.entities(); track beneficiary.id) {-->
-<!--        <button class=" hover:bg-teal-100 h-8"-->
-<!--                [ngClass]="beneficiaryStore.beneficiaryId()==beneficiary.id ? 'bg-teal-100' : ''"-->
-<!--                (click)="beneficiaryStore.setId(beneficiary.id)"-->
-<!--        >-->
-<!--          {{ beneficiary.name }}-->
-<!--        </button>-->
-<!--    }-->
   </div>
-  <div class="col-span-8 h-8">
+  <div class="col-span-10 h-8">
     <div class="grid grid-cols-12 place-items-center text-2xl ">
-      <div class="col-span-3 w-full bg-teal-200">
+      <div class="col-span-4 w-full bg-teal-200">
         <button class="w-full hover:bg-teal-100"
                 (click)="goToRoute('details')"
                 [ngClass]="!checkRoute('details') ? 'bg-teal-200' : 'bg-teal-100'">
           Detalii
         </button>
       </div>
-      <div class="col-span-3 w-full bg-teal-200">
+      <div class="col-span-4 w-full bg-teal-200">
         <button class="w-full hover:bg-teal-100"
                 (click)="goToRoute('certificates')"
                 [ngClass]="!checkRoute('certificate') ? 'bg-teal-200' : 'bg-teal-100'">
           Certificate
         </button>
       </div>
-      <div class="col-span-3 w-full bg-teal-200">
-        <button class="w-full hover:bg-teal-100"
-        (click)="goToRoute('licenses')"
-        [ngClass]="!checkRoute('licenses') ? 'bg-teal-200' : 'bg-teal-100'">
-          Autorizatii
-        </button>
-
-      </div>
-      <div class="col-span-3 w-full bg-teal-200">
+<!--      <div class="col-span-3 w-full bg-teal-200">-->
+<!--        <button class="w-full hover:bg-teal-100"-->
+<!--        (click)="goToRoute('licenses')"-->
+<!--        [ngClass]="!checkRoute('licenses') ? 'bg-teal-200' : 'bg-teal-100'">-->
+<!--          Autorizatii-->
+<!--        </button>-->
+<!--      </div>-->
+      <div class="col-span-4 w-full bg-teal-200">
         <button class="w-full hover:bg-teal-100"
                 (click)="goToRoute('projects')"
                 [ngClass]="!checkRoute('projects') ? 'bg-teal-200' : 'bg-teal-100'">
@@ -68,7 +106,7 @@
       </div>
 
     </div>
-    <div class="w-full">
+    <div class="w-full ml-2">
       <router-outlet ></router-outlet>
     </div>
   </div>

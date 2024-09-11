@@ -31,7 +31,7 @@ export const LicenseStore = signalStore(
         exhaustMap(license => licenseService.add(license).pipe(
           tap({
             next: license => patchState(store, addEntity(license), setFulfilled()),
-            error: error => patchState(store, setError(error.message()))
+            error: error => patchState(store, setError(error.message))
           })
         ))
       )
@@ -42,7 +42,7 @@ export const LicenseStore = signalStore(
         exhaustMap(license => licenseService.update(license).pipe(
           tap({
             next: license => patchState(store, updateEntity({id: license.id, changes: license}), setFulfilled()),
-            error: error => patchState(store, setError(error.message()))
+            error: error => patchState(store, setError(error.message))
           })
         ))
       )
@@ -53,7 +53,7 @@ export const LicenseStore = signalStore(
         exhaustMap(licenseId => licenseService.delete(licenseId).pipe(
           tap({
             next: ()=> patchState(store, removeEntity(licenseId), setFulfilled()),
-            error: error => patchState(store, setError(error.message()))
+            error: error => patchState(store, setError(error.message))
           })
         ))
       )
@@ -64,7 +64,9 @@ export const LicenseStore = signalStore(
   })),
   withComputed((store) => ({
     license: computed<License>(()=>
-    store.entityMap()[store.licenseId()])
+    store.entityMap()[store.licenseId()]),
+    licensesByBeneficiary: computed<License[]>(()=>
+    store.entities().filter(license => license.id === store.licenseId()))
   })),
   withHooks({
     onInit(store) {

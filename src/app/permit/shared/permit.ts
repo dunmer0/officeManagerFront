@@ -1,3 +1,5 @@
+import {Comment} from "../../comment/shared/comment";
+
 export type Permit = {
   id:number;
   projectId:number;
@@ -8,5 +10,7 @@ export type Permit = {
   expirationDate:string;
   submissionDate:string;
   validity:number;
+  comments: Comment[];
+
 }
 

@@ -29,10 +29,9 @@ export const BeneficiariesStore = signalStore(
   withRequestStatus(),
   withMethods(
     (store, beneficiaryService = inject(BeneficiaryService)) => ({
-
-        // setBeneficiary(beneficiary: Beneficiary): void {
-        //   patchState(store, setEntity(beneficiary));
-        // },
+        setFilter(filter: string) {
+          patchState(store, {filter});
+        },
         addBeneficiary: rxMethod<Beneficiary>(
           pipe(
             tap(() => patchState(store, setPending())),
@@ -92,6 +91,9 @@ export const BeneficiariesStore = signalStore(
     beneficiary: computed<Beneficiary>(() =>
       store.entityMap()[store.beneficiaryId()]
     ),
+    filteredBeneficiaries: computed<Beneficiary[]>(()=>
+    store.entities().filter(beneficiary => beneficiary.name.toLowerCase().includes(store.filter().toLowerCase()))
+    )
   })),
   withHooks({
     onInit(store) {

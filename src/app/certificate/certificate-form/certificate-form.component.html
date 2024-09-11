@@ -1,0 +1,66 @@
+<div class="mt-2 ">
+  <form [formGroup]="certificateForm" class="grid grid-cols-6 gap-4" >
+    <mat-form-field  class="col-span-1 mt-4 mb-4" >
+      <mat-label>Number</mat-label>
+      <input matInput  minlength="3" placeholder="235.125"  formControlName="number"
+             class="bg-gray-200 border-2 border-teal-600 rounded-2xl focus:border-blue-500  p-2"
+      />
+    </mat-form-field>
+    <mat-form-field  class="col-span-5 mt-4 mb-4" >
+      <mat-label>Title</mat-label>
+      <input matInput minlength="3" placeholder="Construire iombil de locuinte..."  formControlName="title"
+             class="bg-gray-200 border-2 border-teal-600 rounded-2xl focus:border-blue-500  p-2"/>
+      @if (certificateForm.controls.title.hasError('pattern')){
+        <mat-error >
+          Only alphanumeric, "." ,"-" and "_" <strong>allowed</strong>.
+        </mat-error>
+      }
+      <mat-error *ngIf="certificateForm.controls.title.hasError('required')">
+        Title is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field  class="col-span-2 mb-4" >
+      <mat-label>Release Date</mat-label>
+      <input matInput type="date"   placeholder="Ex. 77"  formControlName="releaseDate"
+             class="bg-gray-200 border-2 border-teal-600 rounded-2xl focus:border-blue-500  p-2"/>
+      <mat-error *ngIf="certificateForm.controls.releaseDate.hasError('required')">
+        Date <strong>required</strong>.
+      </mat-error>
+
+    </mat-form-field>
+    <mat-form-field  class="col-span-2 mb-4" >
+      <mat-label>Check Time</mat-label>
+      <input matInput type="text"  placeholder="Check time before expiry"  formControlName="checkTime"
+             class="bg-gray-200 border-2 border-teal-600 rounded-2xl focus:border-blue-500  p-2"/>
+      @if(certificateForm.controls.checkTime.hasError('pattern')){
+        <mat-error>Only <strong>numbers </strong> are allowed.</mat-error>
+      }
+      @if(certificateForm.controls.checkTime.hasError('required')){
+        <mat-error>Check time <strong>required</strong>.</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field  class="col-span-2 mb-4" >
+      <mat-label>Validity</mat-label>
+      <input matInput type="text"  placeholder="Validity Time in months"  formControlName="validity"
+             class="bg-gray-200 border-2 border-teal-600 rounded-2xl focus:border-blue-500  p-2"/>
+      @if(certificateForm.controls.validity.hasError('pattern')){
+        <mat-error>Only <strong>numbers </strong> are allowed.</mat-error>
+      }
+      @if(certificateForm.controls.checkTime.hasError('required')){
+        <mat-error>Validity time <strong>required</strong>.</mat-error>
+      }
+    </mat-form-field>
+  </form>
+  <div class="grid grid-cols-4 gap-4">
+    <div class="col-start-3 col-span-1 ">
+      <button   (click)="onSubmit()" class=" bg-teal-100 border-2 border-teal-600 rounded-2xl text-lg hover:text-xl h-12 mt-2 lg:text-lg text-clip w-full">
+        Adauga
+      </button>
+    </div>
+    <div class="col-start-4 col-span-1">
+      <button (click)="goBack()" class="  bg-teal-100 border-2 border-teal-600 rounded-2xl text-lg hover:text-xl h-12 mt-2 lg:text-lg text-clip w-full">
+        Inapoi
+      </button>
+    </div>
+  </div>
+</div>

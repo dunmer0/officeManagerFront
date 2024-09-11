@@ -1,11 +1,12 @@
 import {patchState, signalStore, withComputed, withHooks, withMethods, withState} from "@ngrx/signals";
-import {removeEntity, setAllEntities, updateEntity, withEntities} from "@ngrx/signals/entities";
+import {removeEntity, setAllEntities, setEntity, updateEntity, withEntities} from "@ngrx/signals/entities";
 import {Project} from "./project";
 import {setError, setFulfilled, setPending, withRequestStatus} from "../../state/request-status.feature";
 import {computed, inject} from "@angular/core";
 import {rxMethod} from "@ngrx/signals/rxjs-interop";
 import {exhaustMap, pipe, switchMap, tap} from "rxjs";
 import {ProjectService} from "./project.service";
+import {BeneficiariesStore} from "../../beneficiary/shared/beneficiary.store";
 
 type ProjectState = {
   projectId: number;
@@ -46,7 +47,7 @@ export const ProjectStore = signalStore(
           tap(() => patchState(store, setPending())),
           exhaustMap((project) => projectService.addProject(project).pipe(
             tap({
-              next: project => patchState(store, updateEntity({id: project.id, changes: project}), setFulfilled()),
+              next: project => patchState(store, setEntity(project), setFulfilled()),
               error: (error: { message: string }) => patchState(store, setError(error.message)),
             })
           ))
@@ -62,12 +63,25 @@ export const ProjectStore = signalStore(
             })
           ))
         )
-      )
+      ),
+      updateProject: rxMethod<Project>(
+        pipe(
+          tap(()=> patchState(store, setPending())),
+          exhaustMap(project => projectService.updateProject(project).pipe(
+            tap({
+              next: project => patchState(store, updateEntity({id: project.id, changes:project})),
+              error: error => patchState(store, setError(error.message))
+            })
+          ))
+        )
+      ),
     })
   ),
-  withComputed((store) => ({
-    institution: computed<Project>(() =>
+  withComputed((store, beneficiaryStore = inject(BeneficiariesStore)) => ({
+    project: computed<Project>(() =>
       store.entityMap()[store.projectId()]),
+    projects: computed<Project[]>(()=>
+    store.entities().filter(project => project.beneficiaryId === beneficiaryStore.beneficiaryId()))
   })),
   withHooks({
     onInit(store){

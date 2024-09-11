@@ -1,142 +1,201 @@
-@if (!this.isEditable && this.beneficiaryStore.beneficiary()){
-  @let beneficiary =  this.beneficiaryStore.beneficiary();
-  <div class="grid grid-cols-12 mt-4">
-    <div class="col-span-2 grid ">
-      <div>
-        <p>Name</p>
-        {{beneficiary.name}}
-      </div>
-    </div>
-    <div class="col-span-2 ">
-      <p>Address</p>
-      {{beneficiary.addressName}}
-    </div>
-    <div class="col-span-2 ">
-      <p>Street Number</p>
-      {{beneficiary.streetNumber}}
-    </div>
-    <div class="col-span-2 ">
-      <p>City</p>
-      {{beneficiary.city}}
-    </div>
-    <div class="col-span-2 ">
-      <p>County</p>
-      {{beneficiary.state}}
-    </div>
-    <button (click)="setIsEditable()">
-      <mat-icon aria-hidden="false" aria-label="Edit icon" fontIcon="edit"></mat-icon>
-    </button>
+<div class="w-full flex justify-between items-center mb-3 mt-1 pl-3">
+  <div>
+    <h3 class="text-lg font-bold text-slate-800">Manage the beneficiary details</h3>
+    <p class="text-slate-500">Overview of the details.</p>
   </div>
-}
+  @if(!this.isEditable && this.beneficiaryStore.beneficiary()){
+    <div class="w-32">
+      <button (click)="setIsEditable()" class="w-full bg-teal-100 border-2 border-teal-600 rounded-2xl text-sm hover:text-xl h-12 mt-2 lg:text-lg text-clip">
+        EDIT
+      </button>
+    </div>
+  }
+
+</div>
+@if(!this.isEditable && this.beneficiaryStore.beneficiary()){
+<table class="w-full">
+  <thead class="grid grid-cols-12 ">
+  <tr class="grid grid-cols-5 gap-2 col-span-12">
+    <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 ">
+      <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+        Name
+      </p>
+    </th>
+    <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+      <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+        Street name
+      </p>
+    </th>
+    <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 ">
+      <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+        Street number
+      </p>
+    </th>
+    <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 ">
+      <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+        City
+      </p>
+    </th>
+    <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 ">
+      <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+        State
+      </p>
+    </th>
+  </tr>
+  </thead>
+    @let beneficiary =  this.beneficiaryStore.beneficiary();
+    <tbody class="grid grid-cols-12 ">
+    <tr class="grid grid-cols-5 gap-2 col-span-12">
+      <td class="p-4 border-b border-blue-gray-50">
+        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+          {{beneficiary.name}}
+        </p>
+      </td>
+      <td class="p-4 border-b border-blue-gray-50">
+        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+          {{beneficiary.addressName}}
+        </p>
+      </td>
+      <td class="p-4 border-b border-blue-gray-50">
+        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+          {{beneficiary.streetNumber}}
+        </p>
+      </td>
+      <td class="p-4 border-b border-blue-gray-50">
+        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+          {{beneficiary.city}}
+        </p>
+      </td>
+      <td class="p-4 border-b border-blue-gray-50">
+        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+          {{beneficiary.state}}
+        </p>
+      </td>
+    </tr>
+    </tbody>
+</table>
+  }
 @if(this.isEditable){
-  <div class="mt-2">
-    <mat-form-field hintLabel="Min 3 characters" class="rounded-2xl">
-      <mat-label>Name</mat-label>
-      <input matInput [(ngModel)]="beneficiaryStore.beneficiary().name" minlength="3" placeholder="Ex. Nougat" />
-    </mat-form-field>
-<!--    <mat-form-field hintLabel="Min 3 charactes" class="w-72 ml-1">-->
-<!--      <mat-label>Street</mat-label>-->
-<!--      <input matInput minlength="3"-->
-<!--            #addressName-->
-<!--             required-->
-<!--             placeholder="Ex. Dambovitei"  />-->
-<!--      <mat-error *ngIf="!addressName.required" >-->
-<!--        Address is <strong>required</strong>-->
-<!--      </mat-error>-->
-<!--    </mat-form-field>-->
-<!--    <mat-form-field  class="w-72 ml-1">-->
-<!--      <mat-label>Street number</mat-label>-->
-<!--      <input matInput type="text" pattern="[0-9]*"  placeholder="Ex. 77"   />-->
-<!--      <mat-error *ngIf="beneficiaryForm.controls.streetNumber.hasError('pattern')">-->
-<!--        Only <strong>numbers</strong>  please.-->
-<!--      </mat-error>-->
-<!--    </mat-form-field>-->
-<!--    <mat-form-field  class="w-72 ml-1">-->
-<!--      <mat-label>City</mat-label>-->
-<!--      <input matInput type="text"  placeholder="Ex. Cluj-Napoca"   />-->
-<!--      <mat-error *ngIf="beneficiaryForm.controls['city'].hasError('pattern')">-->
-<!--        Only numbers please.-->
-<!--      </mat-error>-->
-<!--      @if(beneficiaryForm.controls.city.hasError('pattern')){-->
-<!--        <mat-error>Accepted characters: a-z, A-Z, 0-9, ".", "-" and "_".</mat-error>-->
-<!--      }-->
-<!--      @if (beneficiaryForm.controls.city.hasError('maxLength')){-->
-<!--        <mat-error>Maximum length is 50 characters.</mat-error>-->
-<!--      }-->
-<!--    </mat-form-field>-->
-<!--    <mat-form-field  class="w-72 ml-1">-->
-<!--      <mat-label>State</mat-label>-->
-<!--      <input matInput type="text"  placeholder="Ex. Cluj"  />-->
-<!--      @if (beneficiaryForm.controls.state.hasError('pattern')){-->
-<!--        <mat-error>Accepted characters: a-z, A-Z, 0-9, ".", "-" and "_".</mat-error>-->
-<!--      }-->
-<!--      @if (beneficiaryForm.controls.state.hasError('maxLength')){-->
-<!--        <mat-error>Maximum length is 50 characters.</mat-error>-->
-<!--      }-->
-<!--    </mat-form-field>-->
-
-    <mat-form-field>
-      <mat-label>Test</mat-label>
-      <input
-        matInput
-        type="text"
-        id="name"
-        name="name"
-        class="form-control"
-        required
-        pattern="[a-zA-Z0-9\\.\\-\\_]*"
-        minlength="4"
-        [(ngModel)]="this.beneficiaryStore.beneficiary().name"
-        #name="ngModel"
-      />
-      <mat-error *ngIf="name.errors?.['minlength'] && (name.dirty || name.touched)" >
-        Name is <strong>required</strong>.
-      </mat-error>
-      <mat-error *ngIf="name.errors?.['pattern'] && (name.dirty || name.touched)" >
-        Special characters <strong>not</strong> allowed.
-      </mat-error>
-    </mat-form-field>
-
-
-
-
-
-    <button (click)="onSubmit()">
-      Adauga
-    </button>
+  <div class="mt-2 grid grid-cols-12">
+    <div class="grid col-span-12 grid-cols-2 gap-4">
+      <mat-form-field >
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          required
+          pattern="[a-zA-Z0-9\\.\\-\\_]*"
+          minlength="4"
+          [ngModel]="this.beneficiaryStore.beneficiary().name"
+          #name="ngModel"
+        />
+        <mat-error *ngIf="name.errors?.['minlength'] && (name.dirty || name.touched)" >
+          Name is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="name.errors?.['pattern'] && (name.dirty || name.touched)" >
+          Special characters <strong>not</strong> allowed.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>Street</mat-label>
+        <input
+          matInput
+          type="text"
+          id="addressName"
+          name="addressName"
+          class="form-control"
+          required
+          pattern="[a-zA-Z0-9\\.\\-\\_]*"
+          minlength="4"
+          [ngModel]="this.beneficiaryStore.beneficiary().addressName"
+          #addressName="ngModel"
+        />
+        <mat-error *ngIf="addressName.errors?.['minlength'] && (name.dirty || name.touched)" >
+          Name is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="addressName.errors?.['pattern'] && (name.dirty || name.touched)" >
+          Special characters <strong>not</strong> allowed.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="grid col-span-12 gap-4 grid-cols-3">
+      <mat-form-field >
+        <mat-label>Number</mat-label>
+        <input
+          matInput
+          type="text"
+          id="streetNumber"
+          name="streetNumber"
+          class="form-control"
+          required
+          pattern="[0-9]*"
+          maxlength="4"
+          [ngModel]="this.beneficiaryStore.beneficiary().streetNumber"
+          #streetNumber="ngModel"
+        />
+        <mat-error *ngIf="streetNumber.errors?.['maxlength'] && (name.dirty || name.touched)" >
+          Name is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="streetNumber.errors?.['pattern'] && (name.dirty || name.touched)" >
+          Only <strong>numbers</strong> allowed.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>City</mat-label>
+        <input
+          matInput
+          type="text"
+          id="city"
+          name="city"
+          class="form-control"
+          required
+          pattern="[a-zA-Z0-9\\.\\-\\_]*"
+          minlength="3"
+          [ngModel]="this.beneficiaryStore.beneficiary().city"
+          #city="ngModel"
+        />
+        <mat-error *ngIf="city.errors?.['minlength'] && (name.dirty || name.touched)" >
+          Name is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="city.errors?.['pattern'] && (name.dirty || name.touched)" >
+          Special characters <strong>not</strong> allowed.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>State</mat-label>
+        <input
+          matInput
+          type="text"
+          id="state"
+          name="state"
+          class="form-control"
+          required
+          pattern="[a-zA-Z0-9\\.\\-\\_]*"
+          minlength="3"
+          [ngModel]="this.beneficiaryStore.beneficiary().city"
+          #state="ngModel"
+        />
+        <mat-error *ngIf="state.errors?.['minlength'] && (name.dirty || name.touched)" >
+          Name is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="state.errors?.['pattern'] && (name.dirty || name.touched)" >
+          Special characters <strong>not</strong> allowed.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-span-4 grid grid-cols-2 gap-4" >
+      <button (click)="onSubmit()" class=" bg-teal-100 border-2 border-teal-600 rounded-2xl text-sm hover:text-xl h-12 mt-2 lg:text-lg text-clip">
+        Modifica
+      </button>
+      <button (click)="setIsEditable()" class=" bg-teal-100 border-2 border-teal-600 rounded-2xl text-sm hover:text-xl h-12 mt-2 lg:text-lg text-clip">
+        Anulare
+      </button>
+    </div>
   </div>
-  <button (click)="setIsEditable()">
-    Cancel
-  </button>
-
-
 }
 
 
-
-<!-- @if (this.beneficiaryStore.beneficiary()){
-  @let beneficiary =  this.beneficiaryStore.beneficiary();
-
- <div class="grid grid-cols-12">
-  <div class="col-span-12">
-    <h1 class="text-2xl font-bold">Beneficiary Details</h1>
-  </div>
-  {{ beneficiary.name }}
-  {{ beneficiary.addressName}}
-  {{ beneficiary.streetNumber}}
-  {{ beneficiary.state}}
-  {{ beneficiary.city}}
- </div>
-
-
-} -->
-
-
-<!--id: number;-->
-<!--cui: string;-->
-<!--name: string;-->
-<!--addressName: string;-->
-<!--streetNumber: string;-->
-<!--state: string;-->
-<!--city: string;-->
 
